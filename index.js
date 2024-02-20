@@ -3,7 +3,8 @@
 window.onload = main;
 
 let repositoryURL = "https://api.github.com/repos/JasonS05/sololearn-archive/git/trees/main";
-let readmeURL = "https://raw.githubusercontent.com/JasonS05/sololearn-archive/main/README.md";
+let baseURL       = "https://raw.githubusercontent.com/JasonS05/sololearn-archive/main/"
+let readmeURL     = "https://raw.githubusercontent.com/JasonS05/sololearn-archive/main/README.md";
 
 async function main() {
 	window.onload = function() {};
@@ -40,15 +41,13 @@ async function main() {
 
 		document.body.innerHTML = body;
 	} else {
-		let programJSON = await getJSONfromURL(json.tree[codeID].url);
+		let htmlResponse = await fetch(baseURL + json.tree[codeID].path + "/code.html");
+		let cssResponse = await fetch(baseURL + json.tree[codeID].path + "/code.css");
+		let jsResponse = await fetch(baseURL + json.tree[codeID].path + "/code.js");
 
-		let htmlJSON = await getJSONfromURL(programJSON.tree[1].url);
-		let cssJSON = await getJSONfromURL(programJSON.tree[0].url);
-		let jsJSON = await getJSONfromURL(programJSON.tree[2].url);
-
-		let html = base64toUTF8(htmlJSON.content);
-		let css = base64toUTF8(cssJSON.content);
-		let js = base64toUTF8(jsJSON.content);
+		let html = await htmlResponse.text();
+		let css = await cssResponse.text();
+		let js = await jsResponse.text();
 
 		html = html.split("</body>").join(
 `	<style type="text/css">
@@ -100,19 +99,5 @@ async function getJSONfromURL(url) {
 
 		throw new Error("Rate limit exceeded.");
 	}
-}
-
-// https://stackoverflow.com/a/64752311
-function base64toUTF8(base64) {
-    const text = atob(base64);
-    const length = text.length;
-    const bytes = new Uint8Array(length);
-
-    for (let i = 0; i < length; i++) {
-        bytes[i] = text.charCodeAt(i);
-    }
-
-    const decoder = new TextDecoder(); // default is utf-8
-    return decoder.decode(bytes);
 }
 
