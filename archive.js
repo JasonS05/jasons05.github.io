@@ -36,7 +36,6 @@ async function main() {
 		for (let i = 0; i < json.tree.length; i++) {
 			if (json.tree[i].type === "tree") {
 				let name = json.tree[i].path;
-				name = name.split(/^..../).join("");
 				body += `\t\t\t<li><a href="?id=${i}">${name}</a></li>\n`;
 			}
 		}
