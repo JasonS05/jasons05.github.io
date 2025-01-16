@@ -60,7 +60,8 @@ async function main() {
 		if (htmlResponse.status == 404) {
 			let json2 = await getJSONfromURL(json.tree[codeID].url);
 			let response = await fetch(baseURL + json.tree[codeID].path + "/" + json2.tree[0].path);
-			document.write("<!DOCTYPE html><html><head><style>pre { white-space: pre-wrap; tab-size: 4; }</style></head><body><pre>" + await response.text() + "</pre></body></html>");
+			document.write("<!DOCTYPE html><html><head><style>pre { white-space: pre-wrap; tab-size: 4; }</style></head><body><pre id=\"content\"></pre></body></html>");
+			document.getElementById("content").textContent = await response.text();
 			return;
 		}
 
