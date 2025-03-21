@@ -1,0 +1,39 @@
+body {
+	font-family: Helvetica;
+	background-color: #202020;
+	color: #ffffff;
+}
+
+hr {
+	border: none;
+	height: 10px;
+	background-color: #0eeadf;
+}
+
+#container {
+	width: calc(min(100%, 1000px));
+	margin: auto;
+}
+
+a {
+	color: #4080ff;
+}
+
+a:visited {
+	color: #ff80ff;
+}
+
+a:active {
+	color: red;
+}
+
+img {
+	display: block;
+	margin: auto;
+	background: white;
+}
+
+.centered {
+	text-align: center;
+}
+
